@@ -465,13 +465,13 @@ const THEORY_COLOR = "var(--theory)";
 const TEAM = [
   { name: "Elena Šešelgytė", role: "Studio founder & teacher", photo: "team/elena.jpeg", color: TEACHER_COLORS["Elena"],
     bio: "Studio founder and concert pianist, trained at the Royal Conservatory of Brussels and Vytautas Magnus University under Prof. Alexander Paley. Performs internationally and created the studio's signature mindfulness-based \"Eleny Piano\" method." },
-  { name: "Marija Šešelgytė", role: "Teacher — Piano & Theory", photo: "", color: TEACHER_COLORS["Marija"],
+  { name: "Marija Šešelgytė", role: "Teacher — Piano & Theory", photo: "team/marija.jpeg", color: TEACHER_COLORS["Marija"],
     bio: "Violin and viola performer, trained at the Graz University of Arts (Austria) and the North Carolina School of Arts (USA). Winner of national and international competitions, with concerts and festival appearances across Europe and the USA." },
   { name: "Leon Tomic", role: "Teacher — Piano", photo: "team/leon.jpeg", color: TEACHER_COLORS["Leon Tomic"],
     bio: "Vienna-based pianist and piano teacher, trained in jazz piano and songwriting. Started in classical piano before moving into jazz, releasing three solo albums." },
   { name: "Michela Sara De Nuccio", role: "Teacher — Piano", photo: "team/michela-sara.jpeg", color: TEACHER_COLORS["Michela Sara"],
     bio: "Italian pianist, trained at the Giuseppe Verdi Conservatory in Turin and the Koninklijk Conservatory in Brussels. Teaches piano in Vienna since 2018." },
-  { name: "Ieva Šešelgytė", role: "Administrative coordinator", photo: "", color: "var(--gold)",
+  { name: "Ieva Šešelgytė", role: "Administrative coordinator", photo: "team/ieva.jpeg", color: "var(--gold)",
     bio: "Handles communication, organization, and practical support for students and families. During the trip she oversees daily logistics — your main contact for any on-the-day questions." },
 ];
 
@@ -495,7 +495,16 @@ const SESSIONS = [
     "category": "Theory",
     "teacher": "Marija",
     "group": true,
-    "student": "All students"
+    "student": "All students except Amelie",
+    "attendees": [
+      "Sophie",
+      "Amy",
+      "Mark",
+      "Diana",
+      "Elizabet",
+      "Leonas",
+      "Kotryna"
+    ]
   },
   {
     "date": "2026-07-06",
@@ -621,7 +630,16 @@ const SESSIONS = [
     "category": "Theory",
     "teacher": "Marija",
     "group": true,
-    "student": "All students"
+    "student": "All students except Amelie",
+    "attendees": [
+      "Sophie",
+      "Amy",
+      "Mark",
+      "Diana",
+      "Elizabet",
+      "Leonas",
+      "Kotryna"
+    ]
   },
   {
     "date": "2026-07-07",
@@ -747,7 +765,16 @@ const SESSIONS = [
     "category": "Theory",
     "teacher": "Marija",
     "group": true,
-    "student": "All students"
+    "student": "All students except Amelie",
+    "attendees": [
+      "Sophie",
+      "Amy",
+      "Mark",
+      "Diana",
+      "Elizabet",
+      "Leonas",
+      "Kotryna"
+    ]
   },
   {
     "date": "2026-07-08",
@@ -873,7 +900,16 @@ const SESSIONS = [
     "category": "Theory",
     "teacher": "Marija",
     "group": true,
-    "student": "All students"
+    "student": "All students except Amelie",
+    "attendees": [
+      "Sophie",
+      "Amy",
+      "Mark",
+      "Diana",
+      "Elizabet",
+      "Leonas",
+      "Kotryna"
+    ]
   },
   {
     "date": "2026-07-09",
@@ -999,7 +1035,16 @@ const SESSIONS = [
     "category": "Theory",
     "teacher": "Marija",
     "group": true,
-    "student": "All students"
+    "student": "All students except Amelie",
+    "attendees": [
+      "Sophie",
+      "Amy",
+      "Mark",
+      "Diana",
+      "Elizabet",
+      "Leonas",
+      "Kotryna"
+    ]
   },
   {
     "date": "2026-07-10",
@@ -1295,7 +1340,10 @@ function render(){
     refreshChipStates();
 
     const visible = SESSIONS.filter(s => {
-      const studentMatch = s.group || active.student.length===0 || active.student.includes(s.student);
+      const studentMatch = active.student.length===0
+        || (s.group
+              ? (s.attendees ? active.student.some(name => s.attendees.includes(name)) : true)
+              : active.student.includes(s.student));
       const teacherMatch = active.teacher==="All" || s.teacher===active.teacher || s.teacher==="All teachers";
       const categoryMatch = active.category==="All" || s.category===active.category;
       return studentMatch && teacherMatch && categoryMatch;
