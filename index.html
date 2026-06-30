@@ -333,7 +333,44 @@
     margin:0 auto 10px;
     display:block;
     border:2px solid var(--paper-dim);
+    cursor:zoom-in;
+    transition:transform .12s ease;
   }
+  .team-photo:hover{transform:scale(1.05);}
+
+  .lightbox{
+    position:fixed;
+    inset:0;
+    background:rgba(20,40,34,0.92);
+    display:none;
+    align-items:center;
+    justify-content:center;
+    z-index:1000;
+    padding:24px;
+    cursor:zoom-out;
+  }
+  .lightbox.is-open{display:flex;}
+  .lightbox img{
+    max-width:min(440px, 90vw);
+    max-height:80vh;
+    border-radius:12px;
+    box-shadow:0 20px 60px rgba(0,0,0,0.5);
+  }
+  .lightbox-close{
+    position:absolute;
+    top:18px; right:18px;
+    background:rgba(245,240,228,0.15);
+    border:none;
+    color:var(--paper);
+    width:36px; height:36px;
+    border-radius:50%;
+    font-size:18px;
+    cursor:pointer;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+  }
+  .lightbox-close:hover{background:rgba(245,240,228,0.25);}
   .team-avatar{
     width:76px; height:76px;
     border-radius:50%;
@@ -407,6 +444,11 @@
     Ieva (Main contact in Vienna): <a href="tel:+37060562425">+370 605 62 425</a><br>
     Elena: <a href="tel:+37068602274">+370 686 02 274</a>
   </footer>
+</div>
+
+<div class="lightbox" id="lightbox">
+  <button class="lightbox-close" id="lightboxClose" aria-label="Close">✕</button>
+  <img id="lightboxImg" src="" alt="">
 </div>
 
 <script>
@@ -1427,7 +1469,7 @@ function renderTeam(){
     const card = document.createElement("div");
     card.className = "team-card";
     const photoHtml = person.photo
-      ? `<img class="team-photo" src="${person.photo}" alt="${person.name}" loading="lazy" onerror="this.outerHTML='<div class=&quot;team-avatar&quot; style=&quot;background:${person.color}&quot;>${initials(person.name)}</div>'">`
+      ? `<img class="team-photo" src="${person.photo}" alt="${person.name}" data-lightbox="${person.photo}" data-name="${person.name}" loading="lazy" onerror="this.outerHTML='<div class=&quot;team-avatar&quot; style=&quot;background:${person.color}&quot;>${initials(person.name)}</div>'">`
       : `<div class="team-avatar" style="background:${person.color}">${initials(person.name)}</div>`;
     card.innerHTML = `
       ${photoHtml}
@@ -1438,8 +1480,28 @@ function renderTeam(){
   });
 }
 
+function setupLightbox(){
+  const lightbox = document.getElementById("lightbox");
+  const lightboxImg = document.getElementById("lightboxImg");
+  const closeBtn = document.getElementById("lightboxClose");
+
+  document.getElementById("teamGrid").addEventListener("click", (e)=>{
+    const img = e.target.closest("[data-lightbox]");
+    if(!img) return;
+    lightboxImg.src = img.dataset.lightbox;
+    lightboxImg.alt = img.dataset.name;
+    lightbox.classList.add("is-open");
+  });
+
+  function close(){ lightbox.classList.remove("is-open"); lightboxImg.src = ""; }
+  lightbox.addEventListener("click", close);
+  closeBtn.addEventListener("click", (e)=>{ e.stopPropagation(); close(); });
+  document.addEventListener("keydown", (e)=>{ if(e.key==="Escape") close(); });
+}
+
 render();
 renderTeam();
+setupLightbox();
 </script>
 </body>
 </html>
