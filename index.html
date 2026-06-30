@@ -1,0 +1,1397 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Vienna Piano Summer School — Schedule</title>
+<meta name="description" content="Lesson schedule, venue directions, and calendar sync for the Vienna piano summer school.">
+
+<!--
+  ============================================================
+  HOW TO EDIT THIS PAGE
+  ============================================================
+  Everything live is in the consts below:
+    SESSIONS    — one entry per lesson/event
+    ROOMS       — room code -> label + address
+    TEACHER_COLORS — teacher name -> badge color (from your
+                     studio's own color-coding, taken straight
+                     from the spreadsheet legend)
+    DURATION_BY_CATEGORY — minutes per category. Change once,
+                     every "end time" on the page updates.
+
+  Save, commit, push, enable Pages (Settings -> Pages ->
+  Deploy from branch -> / root). No build step.
+
+  Shareable filtered links, any combination:
+    ?student=Ben
+    ?teacher=Elena
+    ?category=Piano
+  ============================================================
+-->
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,600;9..144,700&family=Inter:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+
+<style>
+  :root{
+    --ink:#20201d;
+    --ink-soft:#5b5a4f;
+    --paper:#f5f0e4;
+    --paper-dim:#ece4d2;
+    --green:#1f3a30;
+    --green-deep:#142822;
+    --gold:#c9a227;
+    --gold-bright:#e3bf4e;
+    --garnet:#8b3a3a;
+    --theory:#EA9999;
+    --font-display:'Fraunces', Georgia, serif;
+    --font-body:'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+    --font-mono:'IBM Plex Mono', 'SFMono-Regular', Consolas, monospace;
+    --radius:10px;
+    --max:640px;
+  }
+
+  *{box-sizing:border-box;}
+  html{-webkit-text-size-adjust:100%;}
+  body{
+    margin:0;
+    background:var(--green);
+    color:var(--paper);
+    font-family:var(--font-body);
+    line-height:1.5;
+    -webkit-font-smoothing:antialiased;
+  }
+  a{color:inherit;}
+  button{font-family:inherit;}
+
+  .wrap{max-width:var(--max); margin:0 auto; padding:0 18px 64px;}
+
+  .hero{
+    background:linear-gradient(180deg, var(--green-deep), var(--green) 85%);
+    padding:36px 18px 28px;
+    border-bottom:1px solid rgba(201,162,39,0.35);
+  }
+  .hero-inner{max-width:var(--max); margin:0 auto;}
+  .eyebrow{
+    font-family:var(--font-mono);
+    font-size:12px;
+    letter-spacing:.12em;
+    text-transform:uppercase;
+    color:var(--gold-bright);
+    margin:0 0 10px;
+  }
+  h1{
+    font-family:var(--font-display);
+    font-weight:700;
+    font-size:clamp(28px,7vw,38px);
+    line-height:1.08;
+    margin:0 0 6px;
+    color:var(--paper);
+  }
+  .date-range{
+    font-family:var(--font-mono);
+    font-size:14px;
+    color:rgba(245,240,228,0.7);
+    margin:0 0 22px;
+  }
+
+  .staff{
+    height:16px;
+    margin:18px 0;
+    background-image:repeating-linear-gradient(
+      to bottom,
+      rgba(201,162,39,0.55) 0px,
+      rgba(201,162,39,0.55) 1px,
+      transparent 1px,
+      transparent 4px
+    );
+    background-size:100% 16px;
+    background-repeat:repeat-x;
+  }
+  .staff.tight{height:10px; margin:10px 0; background-size:100% 10px;}
+
+  .venue{
+    background:var(--paper);
+    color:var(--ink);
+    border-radius:var(--radius);
+    padding:18px 18px 16px;
+    box-shadow:0 12px 28px rgba(0,0,0,0.28);
+  }
+  .venue-label{
+    font-family:var(--font-mono);
+    font-size:11px;
+    letter-spacing:.1em;
+    text-transform:uppercase;
+    color:var(--ink-soft);
+    margin:0 0 4px;
+  }
+  .venue-name{
+    font-family:var(--font-display);
+    font-weight:600;
+    font-size:21px;
+    margin:0 0 2px;
+  }
+  .venue-address{
+    font-size:14.5px;
+    color:var(--ink-soft);
+    margin:0 0 6px;
+  }
+  .venue-note{
+    font-size:12.5px;
+    color:var(--ink-soft);
+    margin:0 0 14px;
+    font-style:italic;
+  }
+  .btn{
+    display:inline-flex;
+    align-items:center;
+    gap:8px;
+    justify-content:center;
+    font-family:var(--font-body);
+    font-weight:600;
+    font-size:14.5px;
+    padding:11px 16px;
+    border-radius:8px;
+    border:none;
+    cursor:pointer;
+    text-decoration:none;
+    transition:transform .08s ease, filter .15s ease;
+  }
+  .btn:active{transform:scale(0.97);}
+  .btn-primary{background:var(--green); color:var(--paper); width:100%;}
+  .btn-primary:hover{filter:brightness(1.15);}
+  .btn-gold{
+    background:var(--gold);
+    color:var(--green-deep);
+    font-size:13.5px;
+    padding:8px 12px;
+  }
+  .btn-gold:hover{background:var(--gold-bright);}
+  :focus-visible{outline:2px solid var(--gold-bright); outline-offset:2px;}
+
+  .facets{margin-top:24px;}
+  .facet-row{margin-top:14px;}
+  .facet-label{
+    font-family:var(--font-mono);
+    font-size:11px;
+    letter-spacing:.1em;
+    text-transform:uppercase;
+    color:rgba(245,240,228,0.5);
+    margin:0 0 7px;
+  }
+  .chip-row{display:flex; gap:8px; flex-wrap:wrap;}
+  .chip{
+    font-family:var(--font-mono);
+    font-size:12.5px;
+    padding:7px 13px;
+    border-radius:999px;
+    border:1px solid rgba(245,240,228,0.35);
+    background:transparent;
+    color:rgba(245,240,228,0.85);
+    cursor:pointer;
+  }
+  .chip[aria-pressed="true"]{
+    background:var(--gold);
+    border-color:var(--gold);
+    color:var(--green-deep);
+    font-weight:600;
+  }
+
+  main{padding-top:8px;}
+  .day-heading{
+    font-family:var(--font-display);
+    font-weight:600;
+    font-size:19px;
+    color:var(--gold-bright);
+    margin:30px 0 0;
+    display:flex;
+    align-items:baseline;
+    gap:10px;
+  }
+  .day-heading .weekday{color:var(--paper);}
+  .today-dot{
+    width:7px; height:7px; border-radius:50%;
+    background:var(--garnet);
+    display:inline-block;
+    flex-shrink:0;
+  }
+  @media (prefers-reduced-motion: no-preference){
+    .today-dot{animation:pulse 2.4s ease-in-out infinite;}
+  }
+  @keyframes pulse{ 0%,100%{opacity:1;} 50%{opacity:.35;} }
+
+  .session{
+    background:var(--paper);
+    color:var(--ink);
+    border-radius:var(--radius);
+    padding:14px 16px;
+    margin-top:10px;
+    display:flex;
+    align-items:center;
+    gap:14px;
+  }
+  .session.is-now{box-shadow:0 0 0 2px var(--garnet) inset;}
+  .session.is-group{border:1.5px dashed var(--theory); background:rgba(234,153,153,0.08); color:var(--paper);}
+  .session.is-group .time-block{color:rgba(245,240,228,0.6);}
+  .session.is-group .time-block .start{color:var(--paper);}
+  .session.is-group .meta{color:rgba(245,240,228,0.65);}
+  .session.is-group .icon-btn{background:rgba(245,240,228,0.15); color:var(--paper);}
+  .session.is-group .icon-btn:hover{background:rgba(245,240,228,0.25);}
+  .session.is-concert{border:1.5px dashed var(--gold); background:rgba(201,162,39,0.10); color:var(--paper);}
+  .session.is-concert .time-block{color:rgba(245,240,228,0.6);}
+  .session.is-concert .time-block .start{color:var(--paper);}
+  .session.is-concert .meta{color:rgba(245,240,228,0.65);}
+  .session.is-concert .icon-btn{background:rgba(245,240,228,0.15); color:var(--paper);}
+  .session.is-concert .icon-btn:hover{background:rgba(245,240,228,0.25);}
+  .time-block{
+    font-family:var(--font-mono);
+    font-size:13.5px;
+    color:var(--ink-soft);
+    line-height:1.3;
+    white-space:nowrap;
+    min-width:64px;
+  }
+  .time-block .start{font-weight:600; color:var(--ink); font-size:15px; display:block;}
+  .session-body{flex:1; min-width:0;}
+  .student-row{display:flex; align-items:center; gap:8px; flex-wrap:wrap;}
+  .student{font-family:var(--font-display); font-weight:600; font-size:17px; margin:0;}
+  .badge{
+    font-family:var(--font-mono);
+    font-size:10.5px;
+    letter-spacing:.04em;
+    text-transform:uppercase;
+    padding:2px 7px;
+    border-radius:5px;
+    color:var(--ink);
+    line-height:1.6;
+  }
+  .meta{font-size:13px; color:var(--ink-soft); margin:3px 0 0;}
+  .session-actions{display:flex; flex-direction:column; gap:6px; flex-shrink:0;}
+  .icon-btn{
+    background:var(--paper-dim);
+    border:none;
+    border-radius:7px;
+    padding:7px 10px;
+    font-family:var(--font-mono);
+    font-size:12px;
+    color:var(--ink);
+    cursor:pointer;
+  }
+  .icon-btn:hover{background:#e2d8bd;}
+
+  .empty{
+    font-family:var(--font-mono);
+    font-size:14px;
+    color:rgba(245,240,228,0.6);
+    margin-top:30px;
+    text-align:center;
+  }
+
+  .bundle-row{margin-top:26px; display:flex; gap:10px; flex-wrap:wrap;}
+
+  footer{
+    margin-top:46px;
+    padding-top:18px;
+    border-top:1px solid rgba(201,162,39,0.25);
+    font-size:12.5px;
+    color:rgba(245,240,228,0.5);
+    font-family:var(--font-mono);
+  }
+
+  /* ---------- Meet Our Team ---------- */
+  .team-section{margin-top:42px;}
+  .team-heading{
+    font-family:var(--font-display);
+    font-weight:600;
+    font-size:21px;
+    color:var(--gold-bright);
+    margin:0 0 4px;
+  }
+  .team-sub{
+    font-family:var(--font-mono);
+    font-size:12px;
+    color:rgba(245,240,228,0.55);
+    margin:0 0 16px;
+  }
+  .team-grid{
+    display:grid;
+    grid-template-columns:repeat(auto-fill, minmax(132px, 1fr));
+    gap:14px;
+  }
+  .team-card{
+    background:var(--paper);
+    color:var(--ink);
+    border-radius:var(--radius);
+    padding:14px 12px 12px;
+    text-align:center;
+  }
+  .team-photo{
+    width:76px; height:76px;
+    border-radius:50%;
+    object-fit:cover;
+    margin:0 auto 10px;
+    display:block;
+    border:2px solid var(--paper-dim);
+  }
+  .team-avatar{
+    width:76px; height:76px;
+    border-radius:50%;
+    margin:0 auto 10px;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    font-family:var(--font-display);
+    font-weight:600;
+    font-size:24px;
+    color:var(--green-deep);
+  }
+  .team-name{
+    font-family:var(--font-display);
+    font-weight:600;
+    font-size:15px;
+    margin:0 0 2px;
+  }
+  .team-role{
+    font-family:var(--font-mono);
+    font-size:10.5px;
+    letter-spacing:.03em;
+    text-transform:uppercase;
+    color:var(--ink-soft);
+    margin:0 0 8px;
+  }
+  .team-bio{
+    font-size:12.5px;
+    line-height:1.45;
+    color:var(--ink-soft);
+    margin:0;
+  }
+</style>
+</head>
+<body>
+
+<header class="hero">
+  <div class="hero-inner">
+    <p class="eyebrow">Eleny Piano Studio — Summer School</p>
+    <h1>Vienna, Summer&nbsp;2026</h1>
+    <p class="date-range" id="dateRange"></p>
+
+    <div class="venue">
+      <p class="venue-label">Main venue</p>
+      <p class="venue-name">MusikQuartier — Wieden</p>
+      <p class="venue-address">Mühlgasse 30, 1040 Wien</p>
+      <p class="venue-note">Some July 8th sessions (Raum 13) and the Grand Finale concert are at the Mariahilf location instead (Mariahilfer Straße 51, 1060 Wien) — check each card's address.</p>
+      <a class="btn btn-primary" id="directionsBtn" target="_blank" rel="noopener" href="https://www.google.com/maps/search/?api=1&query=M%C3%BChlgasse+30%2C+1040+Wien">Get directions to main venue →</a>
+    </div>
+  </div>
+</header>
+
+<div class="wrap">
+  <nav class="facets" id="facets" aria-label="Filter schedule"></nav>
+
+  <main id="schedule"></main>
+
+  <div class="bundle-row">
+    <button class="btn btn-gold" id="bundleIcs">Download filtered schedule (.ics)</button>
+  </div>
+
+  <section class="team-section">
+    <h2 class="team-heading">Meet our team</h2>
+    <p class="team-sub">Who your kids will be working with in Vienna</p>
+    <div class="team-grid" id="teamGrid"></div>
+  </section>
+
+  <footer>
+    Schedule maintained by Eleny Piano Studio · times shown are local Vienna time (CEST)<br>
+    Main trip email: <a href="mailto:vienna26@elenypiano.studio">vienna26@elenypiano.studio</a><br>
+    Ieva (Main contact in Vienna): <a href="tel:+37060562425">+370 605 62 425</a><br>
+    Elena: <a href="tel:+37068602274">+370 686 02 274</a>
+  </footer>
+</div>
+
+<script>
+/* ============================================================
+   ROOM -> address lookup
+   ============================================================ */
+const ROOMS = {
+  "25": {
+    "label": "Raum 25 (Theory room)",
+    "address": "Mühlgasse 30, 1040 Wien"
+  },
+  "13": {
+    "label": "Raum 13",
+    "address": "Mariahilfer Straße 51, 1060 Wien"
+  },
+  "23": {
+    "label": "Raum 23",
+    "address": "Mühlgasse 30, 1040 Wien"
+  },
+  "22": {
+    "label": "Raum 22",
+    "address": "Mühlgasse 30, 1040 Wien"
+  },
+  "01": {
+    "label": "Raum 01",
+    "address": "Mühlgasse 30, 1040 Wien"
+  },
+  "06": {
+    "label": "Raum 06",
+    "address": "Mühlgasse 30, 1040 Wien"
+  },
+  "concert": {
+    "label": "Feurich Performing Stage",
+    "address": "Mariahilfer Straße 51, 1060 Wien"
+  }
+};
+
+/* ============================================================
+   Teacher -> badge color (from your studio's existing
+   color-coding, taken from the spreadsheet legend)
+   ============================================================ */
+const TEACHER_COLORS = {
+  "Elena": "#D8AAF4",
+  "Leon Tomic": "#A9D08E",
+  "Michela Sara": "#FFD966",
+  "Marija": "#9FC5E8"
+};
+const THEORY_COLOR = "var(--theory)";
+
+/* ============================================================
+   EDIT ME: TEAM
+   "photo" is a relative path (drop the file in /team/ alongside
+   this index.html). Leave photo empty to fall back to a colored
+   initial-avatar using that person's badge color.
+   ============================================================ */
+const TEAM = [
+  { name: "Elena Šešelgytė", role: "Studio founder & teacher", photo: "team/elena.jpeg", color: TEACHER_COLORS["Elena"],
+    bio: "Studio founder and concert pianist, trained at the Royal Conservatory of Brussels and Vytautas Magnus University under Prof. Alexander Paley. Performs internationally and created the studio's signature mindfulness-based \"Eleny Piano\" method." },
+  { name: "Marija Šešelgytė", role: "Teacher — Piano & Theory", photo: "", color: TEACHER_COLORS["Marija"],
+    bio: "Violin and viola performer, trained at the Graz University of Arts (Austria) and the North Carolina School of Arts (USA). Winner of national and international competitions, with concerts and festival appearances across Europe and the USA." },
+  { name: "Leon Tomic", role: "Teacher — Piano", photo: "team/leon.jpeg", color: TEACHER_COLORS["Leon Tomic"],
+    bio: "Vienna-based pianist and piano teacher, trained in jazz piano and songwriting. Started in classical piano before moving into jazz, releasing three solo albums." },
+  { name: "Michela Sara De Nuccio", role: "Teacher — Piano", photo: "team/michela-sara.jpeg", color: TEACHER_COLORS["Michela Sara"],
+    bio: "Italian pianist, trained at the Giuseppe Verdi Conservatory in Turin and the Koninklijk Conservatory in Brussels. Teaches piano in Vienna since 2018." },
+  { name: "Ieva Šešelgytė", role: "Administrative coordinator", photo: "", color: "var(--gold)",
+    bio: "Handles communication, organization, and practical support for students and families. During the trip she oversees daily logistics — your main contact for any on-the-day questions." },
+];
+
+/* ============================================================
+   Minutes per category. Change once here, every end-time and
+   .ics export on the page updates automatically.
+   ============================================================ */
+const DURATION_BY_CATEGORY = { "Theory": 50, "Practice": 50, "Concert": 60 };
+
+/* ============================================================
+   SESSIONS — one entry per lesson/event, extracted from your
+   spreadsheet's cell colors (teacher) + structure (room/time).
+   "group" entries (Theory, Concert) are always shown regardless
+   of active filters, since they involve every student.
+   ============================================================ */
+const SESSIONS = [
+  {
+    "date": "2026-07-06",
+    "start": "09:00",
+    "room": "25",
+    "category": "Theory",
+    "teacher": "Marija",
+    "group": true,
+    "student": "All students"
+  },
+  {
+    "date": "2026-07-06",
+    "start": "10:00",
+    "room": "22",
+    "category": "Practice",
+    "teacher": "Leon Tomic",
+    "group": false,
+    "student": "Sophie"
+  },
+  {
+    "date": "2026-07-06",
+    "start": "10:00",
+    "room": "01",
+    "category": "Practice",
+    "teacher": "Marija",
+    "group": false,
+    "student": "Amelie"
+  },
+  {
+    "date": "2026-07-06",
+    "start": "11:00",
+    "room": "22",
+    "category": "Practice",
+    "teacher": "Leon Tomic",
+    "group": false,
+    "student": "Amy"
+  },
+  {
+    "date": "2026-07-06",
+    "start": "11:00",
+    "room": "01",
+    "category": "Practice",
+    "teacher": "Marija",
+    "group": false,
+    "student": "Mark"
+  },
+  {
+    "date": "2026-07-06",
+    "start": "12:00",
+    "room": "22",
+    "category": "Practice",
+    "teacher": "Leon Tomic",
+    "group": false,
+    "student": "Diana"
+  },
+  {
+    "date": "2026-07-06",
+    "start": "12:00",
+    "room": "01",
+    "category": "Practice",
+    "teacher": "Marija",
+    "group": false,
+    "student": "Elizabet"
+  },
+  {
+    "date": "2026-07-06",
+    "start": "13:00",
+    "room": "22",
+    "category": "Practice",
+    "teacher": "Leon Tomic",
+    "group": false,
+    "student": "Leonas"
+  },
+  {
+    "date": "2026-07-06",
+    "start": "13:00",
+    "room": "01",
+    "category": "Practice",
+    "teacher": "Marija",
+    "group": false,
+    "student": "Elizabet"
+  },
+  {
+    "date": "2026-07-06",
+    "start": "14:00",
+    "room": "22",
+    "category": "Practice",
+    "teacher": "Leon Tomic",
+    "group": false,
+    "student": "Kotryna"
+  },
+  {
+    "date": "2026-07-06",
+    "start": "14:00",
+    "room": "01",
+    "category": "Practice",
+    "teacher": "Marija",
+    "group": false,
+    "student": "Amy"
+  },
+  {
+    "date": "2026-07-06",
+    "start": "15:00",
+    "room": "23",
+    "category": "Practice",
+    "teacher": "Elena",
+    "group": false,
+    "student": "Sophie"
+  },
+  {
+    "date": "2026-07-06",
+    "start": "15:00",
+    "room": "22",
+    "category": "Practice",
+    "teacher": "Leon Tomic",
+    "group": false,
+    "student": "Mark"
+  },
+  {
+    "date": "2026-07-06",
+    "start": "16:00",
+    "room": "23",
+    "category": "Practice",
+    "teacher": "Elena",
+    "group": false,
+    "student": "Diana"
+  },
+  {
+    "date": "2026-07-07",
+    "start": "09:00",
+    "room": "25",
+    "category": "Theory",
+    "teacher": "Marija",
+    "group": true,
+    "student": "All students"
+  },
+  {
+    "date": "2026-07-07",
+    "start": "09:00",
+    "room": "06",
+    "category": "Practice",
+    "teacher": "Michela Sara",
+    "group": false,
+    "student": "Amelie"
+  },
+  {
+    "date": "2026-07-07",
+    "start": "10:00",
+    "room": "06",
+    "category": "Practice",
+    "teacher": "Michela Sara",
+    "group": false,
+    "student": "Sophie"
+  },
+  {
+    "date": "2026-07-07",
+    "start": "11:00",
+    "room": "06",
+    "category": "Practice",
+    "teacher": "Michela Sara",
+    "group": false,
+    "student": "Elizabet"
+  },
+  {
+    "date": "2026-07-07",
+    "start": "12:00",
+    "room": "06",
+    "category": "Practice",
+    "teacher": "Michela Sara",
+    "group": false,
+    "student": "Elizabet"
+  },
+  {
+    "date": "2026-07-07",
+    "start": "13:00",
+    "room": "06",
+    "category": "Practice",
+    "teacher": "Michela Sara",
+    "group": false,
+    "student": "Sophie"
+  },
+  {
+    "date": "2026-07-07",
+    "start": "14:00",
+    "room": "06",
+    "category": "Practice",
+    "teacher": "Michela Sara",
+    "group": false,
+    "student": "Amy"
+  },
+  {
+    "date": "2026-07-07",
+    "start": "15:00",
+    "room": "23",
+    "category": "Practice",
+    "teacher": "Leon Tomic",
+    "group": false,
+    "student": "Diana"
+  },
+  {
+    "date": "2026-07-07",
+    "start": "15:00",
+    "room": "01",
+    "category": "Practice",
+    "teacher": "Elena",
+    "group": false,
+    "student": "Mark"
+  },
+  {
+    "date": "2026-07-07",
+    "start": "16:00",
+    "room": "23",
+    "category": "Practice",
+    "teacher": "Leon Tomic",
+    "group": false,
+    "student": "Kotryna"
+  },
+  {
+    "date": "2026-07-07",
+    "start": "16:00",
+    "room": "01",
+    "category": "Practice",
+    "teacher": "Elena",
+    "group": false,
+    "student": "Leonas"
+  },
+  {
+    "date": "2026-07-07",
+    "start": "17:00",
+    "room": "23",
+    "category": "Practice",
+    "teacher": "Leon Tomic",
+    "group": false,
+    "student": "Mark"
+  },
+  {
+    "date": "2026-07-07",
+    "start": "17:00",
+    "room": "01",
+    "category": "Practice",
+    "teacher": "Elena",
+    "group": false,
+    "student": "Amy"
+  },
+  {
+    "date": "2026-07-07",
+    "start": "18:00",
+    "room": "01",
+    "category": "Practice",
+    "teacher": "Elena",
+    "group": false,
+    "student": "Diana"
+  },
+  {
+    "date": "2026-07-08",
+    "start": "09:00",
+    "room": "25",
+    "category": "Theory",
+    "teacher": "Marija",
+    "group": true,
+    "student": "All students"
+  },
+  {
+    "date": "2026-07-08",
+    "start": "10:00",
+    "room": "13",
+    "category": "Practice",
+    "teacher": "Leon Tomic",
+    "group": false,
+    "student": "Amy"
+  },
+  {
+    "date": "2026-07-08",
+    "start": "11:00",
+    "room": "13",
+    "category": "Practice",
+    "teacher": "Leon Tomic",
+    "group": false,
+    "student": "Diana"
+  },
+  {
+    "date": "2026-07-08",
+    "start": "12:00",
+    "room": "13",
+    "category": "Practice",
+    "teacher": "Leon Tomic",
+    "group": false,
+    "student": "Sophie"
+  },
+  {
+    "date": "2026-07-08",
+    "start": "13:00",
+    "room": "13",
+    "category": "Practice",
+    "teacher": "Leon Tomic",
+    "group": false,
+    "student": "Amelie"
+  },
+  {
+    "date": "2026-07-08",
+    "start": "14:00",
+    "room": "13",
+    "category": "Practice",
+    "teacher": "Marija",
+    "group": false,
+    "student": "Elizabet"
+  },
+  {
+    "date": "2026-07-08",
+    "start": "15:00",
+    "room": "13",
+    "category": "Practice",
+    "teacher": "Marija",
+    "group": false,
+    "student": "Elizabet"
+  },
+  {
+    "date": "2026-07-08",
+    "start": "15:00",
+    "room": "01",
+    "category": "Practice",
+    "teacher": "Michela Sara",
+    "group": false,
+    "student": "Kotryna"
+  },
+  {
+    "date": "2026-07-08",
+    "start": "16:00",
+    "room": "13",
+    "category": "Practice",
+    "teacher": "Marija",
+    "group": false,
+    "student": "Mark"
+  },
+  {
+    "date": "2026-07-08",
+    "start": "16:00",
+    "room": "01",
+    "category": "Practice",
+    "teacher": "Michela Sara",
+    "group": false,
+    "student": "Sophie"
+  },
+  {
+    "date": "2026-07-08",
+    "start": "17:00",
+    "room": "13",
+    "category": "Practice",
+    "teacher": "Marija",
+    "group": false,
+    "student": "Leonas"
+  },
+  {
+    "date": "2026-07-08",
+    "start": "17:00",
+    "room": "01",
+    "category": "Practice",
+    "teacher": "Michela Sara",
+    "group": false,
+    "student": "Mark"
+  },
+  {
+    "date": "2026-07-08",
+    "start": "18:00",
+    "room": "13",
+    "category": "Practice",
+    "teacher": "Marija",
+    "group": false,
+    "student": "Amy"
+  },
+  {
+    "date": "2026-07-08",
+    "start": "18:00",
+    "room": "01",
+    "category": "Practice",
+    "teacher": "Michela Sara",
+    "group": false,
+    "student": "Diana"
+  },
+  {
+    "date": "2026-07-09",
+    "start": "09:00",
+    "room": "25",
+    "category": "Theory",
+    "teacher": "Marija",
+    "group": true,
+    "student": "All students"
+  },
+  {
+    "date": "2026-07-09",
+    "start": "09:00",
+    "room": "01",
+    "category": "Practice",
+    "teacher": "Michela Sara",
+    "group": false,
+    "student": "Amelie"
+  },
+  {
+    "date": "2026-07-09",
+    "start": "10:00",
+    "room": "23",
+    "category": "Practice",
+    "teacher": "Marija",
+    "group": false,
+    "student": "Kotryna"
+  },
+  {
+    "date": "2026-07-09",
+    "start": "10:00",
+    "room": "22",
+    "category": "Practice",
+    "teacher": "Elena",
+    "group": false,
+    "student": "Sophie"
+  },
+  {
+    "date": "2026-07-09",
+    "start": "10:00",
+    "room": "01",
+    "category": "Practice",
+    "teacher": "Michela Sara",
+    "group": false,
+    "student": "Leonas"
+  },
+  {
+    "date": "2026-07-09",
+    "start": "11:00",
+    "room": "23",
+    "category": "Practice",
+    "teacher": "Marija",
+    "group": false,
+    "student": "Mark"
+  },
+  {
+    "date": "2026-07-09",
+    "start": "11:00",
+    "room": "22",
+    "category": "Practice",
+    "teacher": "Elena",
+    "group": false,
+    "student": "Elizabet"
+  },
+  {
+    "date": "2026-07-09",
+    "start": "11:00",
+    "room": "01",
+    "category": "Practice",
+    "teacher": "Michela Sara",
+    "group": false,
+    "student": "Amy"
+  },
+  {
+    "date": "2026-07-09",
+    "start": "12:00",
+    "room": "23",
+    "category": "Practice",
+    "teacher": "Marija",
+    "group": false,
+    "student": "Diana"
+  },
+  {
+    "date": "2026-07-09",
+    "start": "12:00",
+    "room": "22",
+    "category": "Practice",
+    "teacher": "Elena",
+    "group": false,
+    "student": "Mark"
+  },
+  {
+    "date": "2026-07-09",
+    "start": "12:00",
+    "room": "01",
+    "category": "Practice",
+    "teacher": "Michela Sara",
+    "group": false,
+    "student": "Elizabet"
+  },
+  {
+    "date": "2026-07-09",
+    "start": "13:00",
+    "room": "23",
+    "category": "Practice",
+    "teacher": "Marija",
+    "group": false,
+    "student": "Amy"
+  },
+  {
+    "date": "2026-07-09",
+    "start": "13:00",
+    "room": "22",
+    "category": "Practice",
+    "teacher": "Elena",
+    "group": false,
+    "student": "Diana"
+  },
+  {
+    "date": "2026-07-09",
+    "start": "13:00",
+    "room": "01",
+    "category": "Practice",
+    "teacher": "Michela Sara",
+    "group": false,
+    "student": "Sophie"
+  },
+  {
+    "date": "2026-07-10",
+    "start": "09:00",
+    "room": "25",
+    "category": "Theory",
+    "teacher": "Marija",
+    "group": true,
+    "student": "All students"
+  },
+  {
+    "date": "2026-07-10",
+    "start": "10:00",
+    "room": "23",
+    "category": "Practice",
+    "teacher": "Leon Tomic",
+    "group": false,
+    "student": "Amelie"
+  },
+  {
+    "date": "2026-07-10",
+    "start": "10:00",
+    "room": "22",
+    "category": "Practice",
+    "teacher": "Elena",
+    "group": false,
+    "student": "Mark"
+  },
+  {
+    "date": "2026-07-10",
+    "start": "10:00",
+    "room": "01",
+    "category": "Practice",
+    "teacher": "Michela Sara",
+    "group": false,
+    "student": "Diana"
+  },
+  {
+    "date": "2026-07-10",
+    "start": "11:00",
+    "room": "23",
+    "category": "Practice",
+    "teacher": "Leon Tomic",
+    "group": false,
+    "student": "Sophie"
+  },
+  {
+    "date": "2026-07-10",
+    "start": "11:00",
+    "room": "22",
+    "category": "Practice",
+    "teacher": "Elena",
+    "group": false,
+    "student": "Elizabet"
+  },
+  {
+    "date": "2026-07-10",
+    "start": "11:00",
+    "room": "01",
+    "category": "Practice",
+    "teacher": "Michela Sara",
+    "group": false,
+    "student": "Mark"
+  },
+  {
+    "date": "2026-07-10",
+    "start": "12:00",
+    "room": "23",
+    "category": "Practice",
+    "teacher": "Leon Tomic",
+    "group": false,
+    "student": "Diana"
+  },
+  {
+    "date": "2026-07-10",
+    "start": "12:00",
+    "room": "22",
+    "category": "Practice",
+    "teacher": "Elena",
+    "group": false,
+    "student": "Elizabet"
+  },
+  {
+    "date": "2026-07-10",
+    "start": "12:00",
+    "room": "01",
+    "category": "Practice",
+    "teacher": "Michela Sara",
+    "group": false,
+    "student": "Kotryna"
+  },
+  {
+    "date": "2026-07-10",
+    "start": "13:00",
+    "room": "23",
+    "category": "Practice",
+    "teacher": "Leon Tomic",
+    "group": false,
+    "student": "Leonas"
+  },
+  {
+    "date": "2026-07-10",
+    "start": "13:00",
+    "room": "22",
+    "category": "Practice",
+    "teacher": "Elena",
+    "group": false,
+    "student": "Amy"
+  },
+  {
+    "date": "2026-07-10",
+    "start": "13:00",
+    "room": "01",
+    "category": "Practice",
+    "teacher": "Michela Sara",
+    "group": false,
+    "student": "Sophie"
+  },
+  {
+    "date": "2026-07-11",
+    "start": "16:00",
+    "room": "concert",
+    "category": "Concert",
+    "teacher": "All teachers",
+    "group": true,
+    "student": "All 8 students",
+    "duration": 60
+  }
+];
+
+/* ============================================================
+   Below this line is just rendering logic — shouldn't need edits.
+   ============================================================ */
+const $ = (sel) => document.querySelector(sel);
+const VIENNA_OFFSET_HOURS = 2; // CEST in summer.
+const FACETS = ["student", "teacher", "category"];
+
+function pad(n){ return String(n).padStart(2,"0"); }
+
+function addMinutes(hhmm, mins){
+  const [h,m] = hhmm.split(":").map(Number);
+  const total = h*60 + m + mins;
+  return `${pad(Math.floor(total/60)%24)}:${pad(total%60)}`;
+}
+
+function durationFor(s){ return s.duration || DURATION_BY_CATEGORY[s.category] || 50; }
+
+function toUtcStamp(dateStr, timeStr){
+  const [y,m,d] = dateStr.split("-").map(Number);
+  const [hh,mm] = timeStr.split(":").map(Number);
+  const utc = new Date(Date.UTC(y, m-1, d, hh - VIENNA_OFFSET_HOURS, mm));
+  return `${utc.getUTCFullYear()}${pad(utc.getUTCMonth()+1)}${pad(utc.getUTCDate())}T${pad(utc.getUTCHours())}${pad(utc.getUTCMinutes())}00Z`;
+}
+
+function sessionToIcsEvent(s){
+  const end = addMinutes(s.start, durationFor(s));
+  const dtStart = toUtcStamp(s.date, s.start);
+  const dtEnd = toUtcStamp(s.date, end);
+  const room = ROOMS[s.room];
+  const summary = s.category === "Concert" ? "Piano Summer School — Grand Finale concert"
+                : s.category === "Theory" ? "Piano Summer School — Theory (group)"
+                : `Piano lesson — ${s.student}`;
+  const loc = `${room.address} (${room.label})`;
+  const descParts = [
+    s.teacher ? `Teacher: ${s.teacher}` : "",
+    "Questions on the day? Ieva +370 605 62 425 · vienna26@elenypiano.studio"
+  ].filter(Boolean);
+  return [
+    "BEGIN:VEVENT",
+    `UID:${s.date}-${s.start}-${s.student}-${s.room}@piano-summer-school`,
+    `DTSTAMP:${toUtcStamp(s.date, s.start)}`,
+    `DTSTART:${dtStart}`,
+    `DTEND:${dtEnd}`,
+    `SUMMARY:${summary}`,
+    `LOCATION:${loc}`,
+    descParts.length ? `DESCRIPTION:${descParts.join(" — ")}` : "",
+    "END:VEVENT"
+  ].filter(Boolean).join("\r\n");
+}
+
+function downloadIcs(sessions, filename){
+  const body = [
+    "BEGIN:VCALENDAR","VERSION:2.0","PRODID:-//Eleny Piano Studio//Summer School//EN",
+    ...sessions.map(sessionToIcsEvent),
+    "END:VCALENDAR"
+  ].join("\r\n");
+  const blob = new Blob([body], { type: "text/calendar" });
+  const url = URL.createObjectURL(blob);
+  const a = document.createElement("a");
+  a.href = url; a.download = filename;
+  document.body.appendChild(a); a.click(); a.remove();
+  URL.revokeObjectURL(url);
+}
+
+function fmtDate(dateStr){
+  const [y,m,d] = dateStr.split("-").map(Number);
+  const dt = new Date(y, m-1, d);
+  return dt.toLocaleDateString(undefined, { weekday: "long", day: "numeric", month: "long" });
+}
+
+function isToday(dateStr){
+  const today = new Date();
+  const [y,m,d] = dateStr.split("-").map(Number);
+  return today.getFullYear()===y && today.getMonth()===m-1 && today.getDate()===d;
+}
+
+function isHappeningNow(s){
+  if(!isToday(s.date)) return false;
+  const now = new Date();
+  const end = addMinutes(s.start, durationFor(s));
+  const [sh,sm] = s.start.split(":").map(Number);
+  const [eh,em] = end.split(":").map(Number);
+  const start = new Date(); start.setHours(sh,sm,0,0);
+  const stop = new Date(); stop.setHours(eh,em,0,0);
+  return now >= start && now <= stop;
+}
+
+function badgeColor(s){
+  if(s.category === "Theory") return THEORY_COLOR;
+  if(s.category === "Concert") return "var(--gold)";
+  return TEACHER_COLORS[s.teacher] || "var(--gold)";
+}
+
+function mapsUrl(room){
+  const r = ROOMS[room];
+  return `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(r.label + ", " + r.address)}`;
+}
+
+function render(){
+  const params = new URLSearchParams(location.search);
+  const lessons = SESSIONS.filter(s=>s.category !== "Concert");
+  const individualLessons = SESSIONS.filter(s=>!s.group);
+
+  const active = { student: [], teacher: "All", category: "All" };
+  const studentVals = [...new Set(individualLessons.map(s=>s.student))];
+  const fromUrlStudent = params.get("student");
+  if(fromUrlStudent){
+    active.student = fromUrlStudent.split(",").map(s=>s.trim()).filter(s=>studentVals.includes(s));
+  }
+  ["teacher","category"].forEach(dim=>{
+    const vals = [...new Set((dim==="category" ? lessons : individualLessons).map(s=>s[dim]))];
+    const fromUrl = params.get(dim);
+    active[dim] = (fromUrl && vals.includes(fromUrl)) ? fromUrl : "All";
+  });
+
+  const dates = [...new Set(SESSIONS.map(s=>s.date))].sort();
+  if(dates.length){
+    $("#dateRange").textContent = `${fmtDate(dates[0])} – ${fmtDate(dates[dates.length-1])}`;
+  }
+
+  const facetsEl = $("#facets");
+  facetsEl.innerHTML = "";
+  const labels = { student: "Student", teacher: "Teacher", category: "Lesson type" };
+
+  FACETS.forEach(dim=>{
+    const vals = [...new Set((dim==="student" ? individualLessons : dim==="teacher" ? individualLessons : SESSIONS).map(s=>s[dim]))];
+    const row = document.createElement("div");
+    row.className = "facet-row";
+    const label = document.createElement("p");
+    label.className = "facet-label";
+    label.textContent = labels[dim] + (dim==="student" ? " (tap more than one for siblings)" : "");
+    row.appendChild(label);
+    const chipRow = document.createElement("div");
+    chipRow.className = "chip-row";
+    row.appendChild(chipRow);
+
+    ["All", ...vals].forEach(val=>{
+      const chip = document.createElement("button");
+      chip.className = "chip";
+      chip.textContent = val;
+      chip.dataset.dim = dim;
+      chip.addEventListener("click", ()=>{
+        if(dim === "student"){
+          if(val === "All"){
+            active.student = [];
+          } else {
+            const i = active.student.indexOf(val);
+            if(i>=0) active.student.splice(i,1);
+            else active.student.push(val);
+          }
+        } else {
+          active[dim] = val;
+        }
+        paint();
+      });
+      chipRow.appendChild(chip);
+    });
+    facetsEl.appendChild(row);
+  });
+
+  function refreshChipStates(){
+    facetsEl.querySelectorAll(".chip").forEach(chip=>{
+      const dim = chip.dataset.dim;
+      const pressed = dim === "student"
+        ? (chip.textContent === "All" ? active.student.length===0 : active.student.includes(chip.textContent))
+        : (chip.textContent === active[dim]);
+      chip.setAttribute("aria-pressed", String(pressed));
+    });
+  }
+
+  function paint(){
+    refreshChipStates();
+
+    const visible = SESSIONS.filter(s => {
+      const studentMatch = s.group || active.student.length===0 || active.student.includes(s.student);
+      const teacherMatch = active.teacher==="All" || s.teacher===active.teacher || s.teacher==="All teachers";
+      const categoryMatch = active.category==="All" || s.category===active.category;
+      return studentMatch && teacherMatch && categoryMatch;
+    });
+    const byDate = {};
+    visible.forEach(s=>{ (byDate[s.date] = byDate[s.date] || []).push(s); });
+    const sortedDates = Object.keys(byDate).sort();
+
+    const scheduleEl = $("#schedule");
+    scheduleEl.innerHTML = "";
+
+    if(sortedDates.length===0){
+      scheduleEl.innerHTML = '<p class="empty">No sessions match these filters.</p>';
+    }
+
+    sortedDates.forEach(date=>{
+      const heading = document.createElement("h2");
+      heading.className = "day-heading";
+      heading.innerHTML = `${isToday(date) ? '<span class="today-dot" aria-hidden="true"></span>' : ""}<span class="weekday">${fmtDate(date)}</span>`;
+      scheduleEl.appendChild(heading);
+
+      const staff = document.createElement("div");
+      staff.className = "staff tight";
+      scheduleEl.appendChild(staff);
+
+      byDate[date].sort((a,b)=> a.start.localeCompare(b.start)).forEach(s=>{
+        const end = addMinutes(s.start, durationFor(s));
+        const room = ROOMS[s.room];
+        const card = document.createElement("div");
+        card.className = "session"
+          + (s.category==="Theory" ? " is-group" : "")
+          + (s.category==="Concert" ? " is-concert" : "")
+          + (isHappeningNow(s) ? " is-now" : "");
+
+        const metaParts = [s.teacher ? `with ${s.teacher}` : "", room.label, room.address].filter(Boolean);
+        card.innerHTML = `
+          <div class="time-block"><span class="start">${s.start}</span>${end}</div>
+          <div class="session-body">
+            <div class="student-row">
+              <p class="student">${s.student}</p>
+              <span class="badge" style="background:${badgeColor(s)}">${s.category}</span>
+            </div>
+            <p class="meta">${metaParts.join(" · ")}</p>
+          </div>
+          <div class="session-actions">
+            <button class="icon-btn" data-ics>+ Cal</button>
+            <button class="icon-btn" data-dir>Map</button>
+          </div>`;
+        card.querySelector("[data-ics]").addEventListener("click", ()=>{
+          downloadIcs([s], `piano-${s.date}-${s.student}.ics`.toLowerCase().replace(/\s+/g,"-"));
+        });
+        card.querySelector("[data-dir]").addEventListener("click", ()=>{
+          window.open(mapsUrl(s.room), "_blank", "noopener");
+        });
+        scheduleEl.appendChild(card);
+      });
+    });
+
+    $("#bundleIcs").onclick = ()=>{
+      const tag = [
+        active.student.length ? active.student.join("+") : "",
+        active.teacher!=="All" ? active.teacher : "",
+        active.category!=="All" ? active.category : ""
+      ].filter(Boolean).join("-") || "all";
+      downloadIcs(visible, `piano-summer-school-${tag}.ics`.toLowerCase().replace(/\s+/g,"-"));
+    };
+  }
+
+  paint();
+}
+
+function initials(name){
+  return name.split(" ").filter(Boolean).slice(0,2).map(w=>w[0]).join("").toUpperCase();
+}
+
+function renderTeam(){
+  const grid = document.getElementById("teamGrid");
+  if(!grid) return;
+  grid.innerHTML = "";
+  TEAM.forEach(person=>{
+    const card = document.createElement("div");
+    card.className = "team-card";
+    const photoHtml = person.photo
+      ? `<img class="team-photo" src="${person.photo}" alt="${person.name}" loading="lazy" onerror="this.outerHTML='<div class=&quot;team-avatar&quot; style=&quot;background:${person.color}&quot;>${initials(person.name)}</div>'">`
+      : `<div class="team-avatar" style="background:${person.color}">${initials(person.name)}</div>`;
+    card.innerHTML = `
+      ${photoHtml}
+      <p class="team-name">${person.name}</p>
+      <p class="team-role">${person.role}</p>
+      <p class="team-bio">${person.bio}</p>`;
+    grid.appendChild(card);
+  });
+}
+
+render();
+renderTeam();
+</script>
+</body>
+</html>
